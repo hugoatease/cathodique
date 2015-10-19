@@ -33,7 +33,8 @@ server.register([
   server.views({
     engines: {ejs: require('ejs')},
     relativeTo: __dirname,
-    path: 'views'
+    path: 'views',
+    isCached: false
   })
 
   server.start(function() {

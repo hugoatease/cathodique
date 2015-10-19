@@ -4,19 +4,40 @@
   <meta charset="utf-8">
   <title>Mapping</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link href="/static/styles.css" rel="stylesheet">
 </head>
 <body>
   <div class="container-fluid">
     <div id="literally"></div>
   </div>
-  </div>
+
+  <button id="send" class="btn btn-primary">Send</button>
 
   <script src="/static/app.js"></script>
   <script type="text/javascript">
-    LC.init(document.getElementById('literally'), {
+    var drawer = LC.init(document.getElementById('literally'), {
       imageURLPrefix: '/static/img'
+    });
+
+    var config = JSON.parse('<%- JSON.stringify({
+      device: device
+    })%>');
+
+    $('#send').click(function(ev) {
+      drawer.getImage().toBlob(function(blob) {
+        var data = new FormData();
+        data.append('device', config.device);
+        data.append('author', 'Unknown');
+        data.append('image', blob);
+        console.log(data);
+        $.ajax({
+          url: '/api/drawing',
+          method: 'POST',
+          data: data,
+          contentType: false,
+          processData: false
+        })
+      }, 'image/png');
     });
   </script>
 </body>

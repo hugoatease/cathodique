@@ -1,9 +1,11 @@
 module.exports = function(server) {
   server.route({
     method: 'GET',
-    path: '/',
+    path: '/{device}',
     handler: function(request, reply) {
-      reply.view('home');
+      reply.view('home', {
+        device: request.params.device
+      });
     }
   })
 }
