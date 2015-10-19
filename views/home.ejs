@@ -46,14 +46,15 @@
         data.append('device', config.device);
         data.append('author', author);
         data.append('image', blob);
-        console.log(data);
         $.ajax({
           url: '/api/drawing',
           method: 'POST',
           data: data,
           contentType: false,
           processData: false
-        })
+        }).done(function(result) {
+          drawer.clear();
+        }.bind(this));
       }, 'image/png');
     });
   </script>
