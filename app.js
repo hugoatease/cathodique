@@ -14,9 +14,27 @@ server.register([
       }
     }
   },
-  require('./routes')
+  require('./routes'),
+  require('inert'),
+  require('vision')
 ], function(err) {
   if (err) return console.log(err);
+
+  server.route({
+    method: 'GET',
+    path: '/static/{param*}',
+    handler: {
+      directory: {
+        path: 'static/'
+      }
+    }
+  });
+
+  server.views({
+    engines: {ejs: require('ejs')},
+    relativeTo: __dirname,
+    path: 'views'
+  })
 
   server.start(function() {
     console.log('Server running at: ', server.info.uri);

@@ -15,7 +15,7 @@ Drawing.schema = Joi.object().keys({
   sent: Joi.date().iso().required(),
   screened: Joi.boolean().required(),
   device: Joi.string().required(),
-  author: Joi.string(),
+  author: Joi.string()
 });
 
 module.exports = Drawing;

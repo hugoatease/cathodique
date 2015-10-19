@@ -15,5 +15,24 @@
   "dependencies": {
     "bootstrap": "~3.3.5",
     "literallycanvas": "~0.4.10"
+  },
+  "overrides": {
+    "literallycanvas": {
+      "main": [
+        "js/literallycanvas.min.js",
+        "css/literallycanvas.css",
+        "img/**"
+      ]
+    },
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "fonts/**"
+      ]
+    },
+    "react": {
+      "main": "react-with-addons.js"
+    }
   }
 }
