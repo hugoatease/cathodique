@@ -10,8 +10,7 @@ server.register([
       mongodb: {url: 'mongodb://localhost:27017/cathodique'},
       autoIndex: true,
       models: {
-        Drawing: './models/drawing',
-        Device: './models/device'
+        Drawing: './models/drawing'
       }
     }
   },

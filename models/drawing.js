@@ -12,8 +12,10 @@ var Drawing = BaseModel.extend({
 Drawing._collection = 'drawings';
 Drawing.schema = Joi.object().keys({
   blobId: Joi.objectId().required(),
+  sent: Joi.date().iso().required(),
   screened: Joi.boolean().required(),
-  sent: Joi.date().iso().required()
+  device: Joi.string().required(),
+  author: Joi.string(),
 });
 
 module.exports = Drawing;

@@ -13,6 +13,9 @@ module.exports = function(server) {
         var stream = gfs.createReadStream({_id: request.params.imageId});
         reply(stream).header('Content-Type', file.contentType);
       });
+    },
+    config: {
+      id: 'image'
     }
   });
 }
