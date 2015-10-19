@@ -1,0 +1,22 @@
+{
+  "name": "mapping",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hugo Caille",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "boom": "^2.9.0",
+    "gridfs-stream": "^1.1.1",
+    "hapi": "^10.4.1",
+    "hapi-mongo-models": "^2.2.2",
+    "hapi-to": "^1.0.0",
+    "joi": "^6.9.0",
+    "joi-objectid": "^2.0.0",
+    "mongodb": "^2.0.45",
+    "object-assign": "^4.0.1"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "mapping",
+  "version": "0.0.0",
+  "authors": [
+    "Hugo Caille <hugo.caille@isen-lille.fr>"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "literallycanvas": "~0.4.10"
+  }
+}
