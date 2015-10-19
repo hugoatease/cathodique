@@ -5,18 +5,24 @@
   <title>Mapping</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="/static/styles.css" rel="stylesheet">
+  <style type="text/css">
+    #literally {
+      height: 600px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div id="literally"></div>
-  </div>
-
   <button id="send" class="btn btn-primary">Send</button>
+
+  <div id="literally"></div>
 
   <script src="/static/app.js"></script>
   <script type="text/javascript">
     var drawer = LC.init(document.getElementById('literally'), {
-      imageURLPrefix: '/static/img'
+      imageURLPrefix: '/static/img',
+      imageSize: {
+        height: 800
+      }
     });
 
     var config = JSON.parse('<%- JSON.stringify({
