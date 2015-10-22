@@ -7,6 +7,7 @@ module.exports = function(server) {
     method: 'GET',
     path: '/api/drawing',
     handler: function(request, reply) {
+      console.log(request.query);
       var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
       Drawing.find({'$query': {}, '$orderby': {sent: -1}}, function(err, result) {
         if (err) return Boom.notFound();
@@ -30,7 +31,7 @@ module.exports = function(server) {
         Drawing.insertOne({
           blobId: file._id,
           screened: false,
-          sent: Date(),
+          sent: new Date(),
           device: request.payload.device,
           author: request.payload.author
         }, function(err, drawing) {

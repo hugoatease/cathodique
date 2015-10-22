@@ -33,6 +33,7 @@
   <script type="text/javascript">
     var img = new Image();
     img.src = '/static/mask.png';
+    var bgShape = LC.createShape('Image', {x: 0, y: 0, image: img});
     var drawer = LC.init(document.getElementById('literally'), {
       imageURLPrefix: '/static/img',
       imageSize: {
@@ -40,7 +41,7 @@
         height: 1200
       },
       backgroundShapes: [
-        LC.createShape('Image', {x: 0, y: 0, image: img})
+        bgShape
       ],
       tools: [
         LC.tools.Pencil,
@@ -52,6 +53,12 @@
       ]
     });
 
+    drawer.on('shapeSave', function(ev) {
+      if (ev.shape !== bgShape) {
+        drawer.saveShape(bgShape);
+      }
+    }.bind(this));
+
     drawer.setZoom(0.47);
 
     var config = JSON.parse('<%- JSON.stringify({
@@ -59,6 +66,7 @@
     })%>');
 
     $('#send').click(function(ev) {
+      drawer.saveShape(bgShape);
       drawer.getImage().toBlob(function(blob) {
         var author = $('#author').val();
         var data = new FormData();
