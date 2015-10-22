@@ -13,6 +13,7 @@
 </head>
 <body>
   <div class="container-fluid">
+    <br />
     <div class="row">
       <div class="input-group">
         <div class="col-sm-4">
@@ -67,6 +68,10 @@
 
     $('#send').click(function(ev) {
       drawer.saveShape(bgShape);
+      if ($('#author').val() == "") {
+        toastr.error('Please enter author name', 'Validation error');
+        return;
+      }
       drawer.getImage().toBlob(function(blob) {
         var author = $('#author').val();
         var data = new FormData();
@@ -81,7 +86,11 @@
           processData: false
         }).done(function(result) {
           drawer.clear();
-        }.bind(this));
+          toastr.success(author + "'s drawing has been sent", 'Drawing sent');
+        }.bind(this))
+         .fail(function() {
+           toastr.error('Please check WiFi connectivity', 'Network error');
+         });
       }, 'image/png');
     });
   </script>
