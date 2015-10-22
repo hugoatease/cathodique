@@ -75,6 +75,7 @@
         toastr.warning('Please draw something', 'No drawing');
         return;
       }
+      toastr.info('Sending drawing...');
       drawer.getImage().toBlob(function(blob) {
         var author = $('#author').val();
         var data = new FormData();
