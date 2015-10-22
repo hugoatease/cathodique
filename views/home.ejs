@@ -31,9 +31,28 @@
 
   <script src="/static/app.js"></script>
   <script type="text/javascript">
+    var img = new Image();
+    img.src = '/static/mask.png';
     var drawer = LC.init(document.getElementById('literally'), {
-      imageURLPrefix: '/static/img'
+      imageURLPrefix: '/static/img',
+      imageSize: {
+        width: 1920,
+        height: 1200
+      },
+      backgroundShapes: [
+        LC.createShape('Image', {x: 0, y: 0, image: img})
+      ],
+      tools: [
+        LC.tools.Pencil,
+        LC.tools.Eraser,
+        LC.tools.Line,
+        LC.tools.Rectangle,
+        LC.tools.Polygon,
+        LC.tools.Pan
+      ]
     });
+
+    drawer.setZoom(0.47);
 
     var config = JSON.parse('<%- JSON.stringify({
       device: device
