@@ -7,12 +7,38 @@ module.exports = function(server) {
     method: 'GET',
     path: '/api/drawing',
     handler: function(request, reply) {
-      console.log(request.query);
+      var query = {};
+      if (request.query.screened) {
+        query.screened = (request.query.screened == 'true');
+      }
       var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
-      Drawing.find({'$query': {}, '$orderby': {sent: -1}}, function(err, result) {
+      Drawing.find({'$query': query, '$orderby': {sent: -1}}, function(err, result) {
         if (err) return Boom.notFound();
-        reply(result);
+        return reply(result);
       })
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/api/drawing/{id}',
+    handler: function(request, reply) {
+      var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
+      Drawing.findById(request.params.id, function(err, result) {
+        if (!result) return Boom.notFound();
+        return reply(result);
+      })
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/api/drawing/{id}/screened',
+    handler: function(request, reply) {
+      var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
+      Drawing.findByIdAndUpdate(request.params.id, {'$set': {screened: true}}, function(err, result) {
+        return reply(result);
+      });
     }
   });
 
@@ -35,7 +61,7 @@ module.exports = function(server) {
           device: request.payload.device,
           author: request.payload.author
         }, function(err, drawing) {
-          reply(drawing[0]);
+          return reply(drawing[0]);
         });
       });
     },
