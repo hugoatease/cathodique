@@ -67,9 +67,12 @@
     })%>');
 
     $('#send').click(function(ev) {
-      drawer.saveShape(bgShape);
       if ($('#author').val() == "") {
         toastr.error('Please enter author name', 'Validation error');
+        return;
+      }
+      if (drawer.shapes.length === 0) {
+        toastr.warning('Please draw something', 'No drawing');
         return;
       }
       drawer.getImage().toBlob(function(blob) {
