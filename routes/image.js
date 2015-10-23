@@ -9,7 +9,7 @@ module.exports = function(server) {
     handler: function(request, reply) {
       var gfs = Grid(request.server.plugins['hapi-mongo-models'].BaseModel.db, mongo);
       gfs.findOne({_id: request.params.imageId}, function(err, file) {
-        if (!file) reply(Boom.notFound());
+        if (!file) return reply(Boom.notFound());
         var stream = gfs.createReadStream({_id: request.params.imageId});
         reply(stream).header('Content-Type', file.contentType);
       });

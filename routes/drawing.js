@@ -13,7 +13,7 @@ module.exports = function(server) {
       }
       var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
       Drawing.find({'$query': query, '$orderby': {sent: 1}}, function(err, result) {
-        if (err) return Boom.notFound();
+        if (err) return reply(Boom.notFound());
         return reply(result);
       })
     }
@@ -25,9 +25,20 @@ module.exports = function(server) {
     handler: function(request, reply) {
       var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
       Drawing.findById(request.params.id, function(err, result) {
-        if (!result) return Boom.notFound();
+        if (!result) return reply(Boom.notFound());
         return reply(result);
-      })
+      });
+    }
+  });
+
+  server.route({
+    method: 'DELETE',
+    path: '/api/drawing/{id}',
+    handler: function(request, reply) {
+      var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
+      Drawing.deleteOne({"_id": Drawing.ObjectId(request.params.id)}, function(err, count) {
+        return reply('No content').code(204);
+      });
     }
   });
 
