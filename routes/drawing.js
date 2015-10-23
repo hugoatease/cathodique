@@ -12,7 +12,7 @@ module.exports = function(server) {
         query.screened = (request.query.screened == 'true');
       }
       var Drawing = request.server.plugins['hapi-mongo-models'].Drawing;
-      Drawing.find({'$query': query, '$orderby': {sent: -1}}, function(err, result) {
+      Drawing.find({'$query': query, '$orderby': {sent: 1}}, function(err, result) {
         if (err) return Boom.notFound();
         return reply(result);
       })
