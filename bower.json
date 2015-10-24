@@ -16,7 +16,8 @@
     "blueimp-canvas-to-blob": "~2.2.0",
     "bootstrap": "~3.3.5",
     "literallycanvas": "~0.4.10",
-    "toastr": "~2.1.2"
+    "toastr": "~2.1.2",
+    "moment": "~2.10.6"
   },
   "overrides": {
     "literallycanvas": {

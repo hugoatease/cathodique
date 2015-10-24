@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mapping</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/static/styles.css" rel="stylesheet">
+  <style type="text/css">
+    img {
+      max-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div id="drawings"></div>
+  </div>
+
+  <script src="/static/vendor.js"></script>
+  <script src="/static/app.js"></script>
+  <script type="text/javascript">
+    var drawings = React.createElement(Drawings);
+    React.render(drawings, document.getElementById('drawings'));
+  </script>
+</body>
+</html>

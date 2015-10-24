@@ -5,13 +5,22 @@ var concat = require('gulp-concat');
 var concatCss = require('gulp-concat-css');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
+var react = require('gulp-react');
 
 gulp.task('default', ['build']);
-gulp.task('build', ['app', 'styles']);
+gulp.task('build', ['app', 'vendor', 'styles']);
 
-gulp.task('app', ['bower', 'images'], function() {
-  return gulp.src(mainBowerFiles('**/**.js'))
+gulp.task('app', function() {
+  return gulp.src('client/**.js')
+    .pipe(react())
     .pipe(concat('app.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('static/'));
+});
+
+gulp.task('vendor', ['bower', 'images'], function() {
+  return gulp.src(mainBowerFiles('**/**.js'))
+    .pipe(concat('vendor.js'))
     .pipe(uglify())
     .pipe(gulp.dest('static/'));
 });
