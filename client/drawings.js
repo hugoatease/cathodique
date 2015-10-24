@@ -12,6 +12,19 @@ var Drawings = React.createClass({
     }.bind(this));
   },
 
+  deleteDrawing: function(id) {
+    toastr.info('Deleting drawing ' + id + '...');
+    $.ajax({
+      url: '/api/drawing/' + id,
+      method: 'DELETE'
+    }).done(function() {
+      toastr.success('Deleted drawing ' + id);
+      this.fetchDrawings();
+    }.bind(this)).fail(function() {
+      toastr.error('Drawing ' + id + ' deletion failed');
+    }.bind(this));
+  },
+
   componentDidMount: function() {
     this.fetchDrawings();
     window.setInterval(this.fetchDrawings, 5000);
@@ -28,7 +41,7 @@ var Drawings = React.createClass({
             screened = <span className="label label-success">Screened</span>;
           }
           return (
-            <div className="col-sm-2">
+            <div className="col-sm-2" key={drawings['_id']}>
               <a target="_blank" href={image}><img src={image} className="img-rounded" /></a>
               <br />
               <small>On {drawing.device} by {drawing.author}</small>
@@ -37,11 +50,11 @@ var Drawings = React.createClass({
               <br />
               {screened}
               &nbsp;&nbsp;
-              <button className="btn btn-danger btn-xs">Delete</button>
+              <button className="btn btn-danger btn-xs" onClick={this.deleteDrawing.bind(this, drawing['_id'])}>Delete</button>
               <br /><br />
             </div>
           );
-        })}
+        }.bind(this))}
       </div>
     );
   }
