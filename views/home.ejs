@@ -22,6 +22,8 @@
         <div class="col-sm-4">
            <span class="input-group-btn">
                 <button class="btn btn-primary" id="send">Send</button>
+                <button class="btn btn-default" id="previous">View previous</button>
+                <button class="btn btn-danger" id="undo">Undo</button>
            </span>
         </div>
       </div>
@@ -32,6 +34,8 @@
 
   <script src="/static/vendor.js"></script>
   <script type="text/javascript">
+    var previousDrawing = null;
+    var previousDrawingBlob = null;
     var img = new Image();
     img.src = '/static/mask.png';
     var bgShape = LC.createShape('Image', {x: 0, y: 0, image: img});
@@ -90,13 +94,43 @@
           processData: false
         }).done(function(result) {
           drawer.clear();
-          toastr.success(author + "'s drawing has been sent", 'Drawing sent');
+          toastr.success(author + "'s drawing has been sent", 'Drawing ' + result['_id'] + ' sent');
+          previousDrawing = result['_id'];
+          previousDrawingBlob = result['blobId'];
         }.bind(this))
          .fail(function() {
            toastr.error('Please check WiFi connectivity', 'Network error');
          });
       }, 'image/png');
     });
+
+    $('#previous').click(function() {
+      if (!previousDrawingBlob) {
+        toastr.error('No previous drawing', 'Error');
+      }
+      else {
+        window.open('/image/' + previousDrawingBlob);
+      }
+    });
+
+    $('#undo').click(function() {
+      if (!previousDrawing) {
+        toastr.error('No previous drawing', 'Error');
+      }
+      else {
+        toastr.info('Undoing drawing ' + previousDrawing, 'Undoing drawing');
+        $.ajax({
+          url: '/api/drawing/' + previousDrawing,
+          method: 'DELETE'
+        }).done(function() {
+          toastr.success('Deleted drawing ' + previousDrawing, 'Drawing deleted');
+          previousDrawing = null;
+          previousDrawingBlob = null;
+        }).fail(function() {
+          toastr.error("Can't delete drawing " + previousDrawing, 'Error');
+        });
+      }
+    })
   </script>
 </body>
 </html>
